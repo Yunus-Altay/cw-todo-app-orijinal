@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "simaox-jenkins-project-backend"
+    bucket = "simaox-jenkins-project-backend" # create your own s3 bucket and change here
     key = "backend/tf-backend-jenkins.tfstate"
     region = "us-east-1"
   }

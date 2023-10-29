@@ -138,7 +138,7 @@
   hosts: _ansible_react
   become: true
   vars:
-    container_name: oliver_react
+    container_name: simaox_react
     image_name: 363588188113.dkr.ecr.us-east-1.amazonaws.com/clarusway-repo/cw-todo-app:react # change the acc ID accordingly
   tasks:
     - name: remove postgre container
