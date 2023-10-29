@@ -56,6 +56,12 @@ resource "aws_security_group" "tf-sec-gr" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
+    from_port   = 80
+    protocol    = "tcp"
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
     from_port   = 5000
     protocol    = "tcp"
     to_port     = 5000
@@ -83,7 +89,7 @@ resource "aws_security_group" "tf-sec-gr" {
 }
 
 output "react_ip" {
-  value = "http://${aws_instance.managed_nodes[2].public_ip}:3000"
+  value = "http://${aws_instance.managed_nodes[2].public_ip}:80"
 }
 
 output "node_public_ip" {
