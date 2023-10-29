@@ -158,4 +158,4 @@
         image: "{{ image_name }}"
         state: started
         ports:
-          - "3000:3000"
+          - "80:3000"
