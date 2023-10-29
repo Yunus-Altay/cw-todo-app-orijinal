@@ -15,7 +15,7 @@ This project aims to create a Jenkins pipeline to deploy web-page written Nodejs
 
 - The Web Application will be deployed using Nodejs and React framework.
 
-- The Web Application should be accessible via web browser from anywhere on port 3000.
+- The Web Application should be accessible via web browser from anywhere on port 80.
 
 - EC2's and their security groups should be created on AWS console with Terraform.
 
