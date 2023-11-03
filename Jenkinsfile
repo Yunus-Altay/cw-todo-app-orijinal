@@ -19,7 +19,7 @@ pipeline{
             steps {
                 echo 'Creating Infrastructure for the App on AWS Cloud'
                 sh 'cd ./s3-backend && terraform init && terraform apply -auto-approve'
-                sh 'sleep 30'
+                sh 'sleep 60'
                 sh 'envsubst < main-tf-template > ./main.tf'
                 sh 'terraform init && terraform apply --auto-approve'
             }
@@ -119,7 +119,7 @@ pipeline{
 
         failure {
             echo 'Delete the S3 bucket if the main infra is not set up'
-            sh 'terraform apply || cd ./s3-backend && terraform destroy -auto-approve'
+            sh 'terraform apply -auto-approve || cd ./s3-backend && terraform destroy -auto-approve'
             echo 'Deleting Terraform Stack due to the Failure'
             sh 'terraform destroy --auto-approve'
             echo 'Delete the S3 backend bucket and the dynamoDB table'
