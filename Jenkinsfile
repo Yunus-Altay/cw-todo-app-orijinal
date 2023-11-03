@@ -102,9 +102,7 @@ pipeline{
                 aws ecr delete-repository \
                   --repository-name ${APP_REPO_NAME} \
                   --region ${AWS_REGION} \
-                  --force
-                aws s3 rb s3://simaox-jenkins-project-backend --force
-                // change the bucket name accordingly
+                  --force                
                 """
             }
         }
@@ -127,6 +125,8 @@ pipeline{
                 """
             echo 'Deleting Terraform Stack due to the Failure'
                 sh 'terraform destroy --auto-approve'
+                sh 'aws s3 rb s3://simaox-jenkins-project-backend --force'
+                // change the bucket name accordingly
         }
     }                  
 }
