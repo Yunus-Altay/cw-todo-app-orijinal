@@ -18,6 +18,7 @@ pipeline{
             steps {
                 echo 'Creating Infrastructure for the App on AWS Cloud'
                 sh 'cd ./s3-backend && terraform init && terraform apply -auto-approve'
+                sh 'sleep 120'
                 sh 'terraform init && terraform apply --auto-approve'
             }
         }
