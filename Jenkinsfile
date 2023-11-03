@@ -103,6 +103,8 @@ pipeline{
                   --repository-name ${APP_REPO_NAME} \
                   --region ${AWS_REGION} \
                   --force
+                aws s3 rb s3://simaox-jenkins-project-backend --force
+                // change the bucket name accordingly
                 """
             }
         }
