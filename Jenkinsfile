@@ -119,7 +119,10 @@ pipeline{
 
         failure {
             echo 'Delete the S3 bucket if the main infra is not set up'
-            sh 'chmod +x ./script.sh && ./script.sh'
+            sh """
+                cd ./s3-backend
+                terraform output postgre_private_ip || terraform destroy -auto-approve
+                """
             echo 'Deleting Terraform Stack due to the Failure'
             sh 'terraform destroy --auto-approve'
             echo 'Delete the S3 backend bucket and the dynamoDB table'
