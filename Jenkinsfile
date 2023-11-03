@@ -20,7 +20,7 @@ pipeline{
                 echo 'Creating Infrastructure for the App on AWS Cloud'
                 sh 'cd ./s3-backend && terraform init && terraform apply -auto-approve'
                 sh 'sleep 30'
-                sh 'envsubst < main.tf > ./main.tf'
+                sh 'envsubst < main-tf-template > ./main.tf'
                 sh 'terraform init && terraform apply --auto-approve'
             }
         }
