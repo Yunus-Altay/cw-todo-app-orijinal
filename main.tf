@@ -6,9 +6,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "simaox-jenkins-project-backend" # create your own s3 bucket and change here
+    bucket = "simaox-jenkins-project-backend" # the bucket name should match with the one in the main.tf file located in the s3-backend folder
     key = "backend/tf-backend-jenkins.tfstate"
     region = "us-east-1"
+    dynamodb_table = "tf-s3-app-lock"
+    encrypt        = true
   }
 }
 
