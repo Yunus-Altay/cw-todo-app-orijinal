@@ -12,6 +12,7 @@ pipeline{
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         APP_REPO_NAME = "clarusway-repo/cw-todo-app"
         TF_VAR_S3_BUCKET_BACKEND ="simaox-jenkins-project-backend"
+        // You may change the bucket name
     }
 
     stages {
@@ -118,19 +119,19 @@ pipeline{
         }
 
         failure {
-            echo 'Delete the S3 bucket if the main infra is not set up'
+            echo 'Delete the S3 backend bucket and the dynamoDB table if the main infra is not set up'
             sh 'terraform apply -auto-approve || cd ./s3-backend && terraform destroy -auto-approve'
             echo 'Deleting Terraform Stack due to the Failure'
             sh 'terraform destroy --auto-approve'
-            echo 'Delete the S3 backend bucket and the dynamoDB table'
-            sh 'cd ./s3-backend && terraform destroy -auto-approve'
             echo 'Delete the Image Repository on ECR due to the Failure'
             sh """
                 aws ecr delete-repository \
                   --repository-name ${APP_REPO_NAME} \
                   --region ${AWS_REGION}\
                   --force
-                """
+                """            
+            echo 'Delete the S3 backend bucket and the dynamoDB table'
+            sh 'cd ./s3-backend && terraform destroy -auto-approve'
         }
     }                  
 }
