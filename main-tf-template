@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = ${TF_VAR_S3_BUCKET_BACKEND} # S3 bucket name should match with the one in jenkins server tf file
+    bucket = ${TF_VAR_S3_BUCKET_BACKEND}
     key = "backend/tf-backend-jenkins.tfstate"
     region = "us-east-1"
     dynamodb_table = "tf-s3-app-lock"
