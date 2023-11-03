@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "tf-remote-state" {
-  bucket        = "tf-remote-s3-bucket-simaox"
+  bucket        = "simaox-jenkins-project-backend"
   force_destroy = true
 }
 
