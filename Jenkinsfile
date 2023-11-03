@@ -17,8 +17,8 @@ pipeline{
         stage('Create Infrastructure for the App') {
             steps {
                 echo 'Creating Infrastructure for the App on AWS Cloud'
-                sh 'cd s3-backend && terraform init && terraform apply --auto-approve'
-                sh 'pwd && terraform init && terraform apply --auto-approve'
+                sh 'terraform init'
+                sh 'terraform apply --auto-approve'
 
             }
         }
@@ -125,8 +125,6 @@ pipeline{
                 """
             echo 'Deleting Terraform Stack due to the Failure'
                 sh 'terraform destroy --auto-approve'
-                sh 'aws s3 rb s3://simaox-jenkins-project-backend --force'
-                // change the bucket name accordingly
         }
     }                  
 }
