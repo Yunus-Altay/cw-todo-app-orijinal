@@ -2,8 +2,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
+variable "S3_BUCKET_BACKEND" {
+    type        = string
+    description = "This is the name of the S3 bucket used as backend for Terraform"
+}
+
 resource "aws_s3_bucket" "tf-remote-state" {
-  bucket        = "simaox-jenkins-project-backend"
+  bucket        = var.S3_BUCKET_BACKEND
   force_destroy = true
 }
 

@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "simaox-jenkins-project-backend" # S3 bucket name should match with the one in jenkins server tf file
+    bucket = var.S3_BUCKET_BACKEND # S3 bucket name should match with the one in jenkins server tf file
     key = "backend/tf-backend-jenkins.tfstate"
     region = "us-east-1"
     dynamodb_table = "tf-s3-app-lock"
@@ -16,6 +16,11 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+}
+
+variable "S3_BUCKET_BACKEND" {
+    type        = string
+    description = "This is the name of the S3 bucket used as backend for Terraform"
 }
 
 variable "tags" {

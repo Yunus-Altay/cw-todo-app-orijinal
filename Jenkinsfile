@@ -11,6 +11,7 @@ pipeline{
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         APP_REPO_NAME = "clarusway-repo/cw-todo-app"
+        TF_VAR_S3_BUCKET_BACKEND ="simaox-jenkins-project-backend"
     }
 
     stages {
