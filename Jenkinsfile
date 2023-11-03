@@ -17,9 +17,8 @@ pipeline{
         stage('Create Infrastructure for the App') {
             steps {
                 echo 'Creating Infrastructure for the App on AWS Cloud'
-                sh 'terraform init'
-                sh 'terraform apply --auto-approve'
-
+                sh 'cd ./s3-backend && terraform init && terraform apply'
+                sh 'terraform init && terraform apply --auto-approve'
             }
         }
 
@@ -99,6 +98,7 @@ pipeline{
                 sh """
                 docker image prune -af
                 terraform destroy --auto-approve
+                cd ./s3-backend && terraform destroy -auto-approve
                 aws ecr delete-repository \
                   --repository-name ${APP_REPO_NAME} \
                   --region ${AWS_REGION} \
@@ -115,7 +115,6 @@ pipeline{
         }
 
         failure {
-
             echo 'Delete the Image Repository on ECR due to the Failure'
             sh """
                 aws ecr delete-repository \
@@ -124,7 +123,9 @@ pipeline{
                   --force
                 """
             echo 'Deleting Terraform Stack due to the Failure'
-                sh 'terraform destroy --auto-approve'
+            sh 'terraform destroy --auto-approve'
+            echo 'Delete the S3 backend bucket and the dynamoDB table'
+            sh 'cd ./s3-backend && terraform destroy -auto-approve'
         }
     }                  
 }
