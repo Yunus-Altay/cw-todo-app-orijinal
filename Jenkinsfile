@@ -116,6 +116,10 @@ pipeline{
         }
 
         failure {
+            echo 'Deleting Terraform Stack due to the Failure'
+            sh 'terraform destroy --auto-approve'
+            echo 'Delete the S3 backend bucket and the dynamoDB table'
+            sh 'cd ./s3-backend && terraform destroy -auto-approve'
             echo 'Delete the Image Repository on ECR due to the Failure'
             sh """
                 aws ecr delete-repository \
@@ -123,10 +127,6 @@ pipeline{
                   --region ${AWS_REGION}\
                   --force
                 """
-            echo 'Deleting Terraform Stack due to the Failure'
-            sh 'terraform destroy --auto-approve'
-            echo 'Delete the S3 backend bucket and the dynamoDB table'
-            sh 'cd ./s3-backend && terraform destroy -auto-approve'
         }
     }                  
 }
