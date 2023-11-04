@@ -26,6 +26,15 @@ variable "user" {
   default = "simaox"
 }
 
+variable "existing_hosted_zone" {
+  default = "awsyunusaltaysx.net"
+}
+
+data "aws_route53_zone" "selected" {
+  name         = var.existing_hosted_zone
+  private_zone = false
+}
+
 resource "aws_instance" "managed_nodes" {
   ami = "ami-05a5f6298acdb05b6"
   count = 3
@@ -90,6 +99,14 @@ resource "aws_security_group" "tf-sec-gr" {
   }
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "www.awsyunusaltaysx.net"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.managed_nodes[2].public_ip]
+}
+
 output "react_ip" {
   value = "http://${aws_instance.managed_nodes[2].public_ip}:80"
 }
@@ -100,4 +117,8 @@ output "node_public_ip" {
 
 output "postgre_private_ip" {
   value = aws_instance.managed_nodes[0].private_ip
+}
+
+output "web_application_url" {
+  value = aws_route53_record.www.name
 }
