@@ -96,7 +96,7 @@ pipeline{
 
         stage('Notify Slack') {
             steps {
-                slackSend channel: '#class-chat', message: 'To-do application is deployed', tokenCredentialId: 'slack-token'
+                slackSend channel: '#class-chat', message: 'Application (Project-25 ; to-do app)(simaox) is deployed', tokenCredentialId: 'slack-token'
              }
         }
 
@@ -125,7 +125,7 @@ pipeline{
         }
 
         success {
-            slackSend channel: '#class-chat', message: 'Pipeline (Project-25 ; to-do app)(simaox) is successful & the infrastructure is destroyed.', tokenCredentialId: 'slack-token'
+            slackSend channel: '#class-chat', message: 'Pipeline (Project-25 ; to-do app)(simaox) is successful.', tokenCredentialId: 'slack-token'
         }
 
         failure {
