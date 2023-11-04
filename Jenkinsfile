@@ -96,7 +96,7 @@ pipeline{
 
         stage('Notify Slack') {
             steps {
-                slackSend channel: '#class-chat', message: 'Application (Project-25 ; to-do app)(simaox) is deployed', tokenCredentialId: 'slack-token'
+                slackSend channel: '#class-chat', message: 'Application (Project-25 ; to-do app)(simaox) is deployed.', tokenCredentialId: 'slack-token'
              }
         }
 
