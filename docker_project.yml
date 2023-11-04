@@ -81,6 +81,8 @@
 - name: postgre database config
   hosts: _ansible_postgresql
   become: true
+  vars_files:
+    - postgres-secret.yaml
   vars:
     container_name: simaox_postgre
     image_name: 363588188113.dkr.ecr.us-east-1.amazonaws.com/clarusway-repo/cw-todo-app:postgre # change the acc ID accordingly
@@ -104,7 +106,7 @@
         ports:
           - "5432:5432"
         env:
-          POSTGRES_PASSWORD: "Pp123456789"
+          POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
         volumes:
           - /db-data:/var/lib/postgresql/data 
 
