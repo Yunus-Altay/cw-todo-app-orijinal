@@ -116,7 +116,10 @@ pipeline{
         always {
             echo 'Deleting all local images'
             sh 'docker image prune -af'
-            slackSend channel: '#class-chat', message: 'Pipeline (to-do app) is successfull'
+        }
+
+        success {
+            slackSend channel: '#class-chat', message: 'Pipeline (Project-25 ; to-do app)(simaox) is successful', tokenCredentialId: 'slack-token'
         }
 
         failure {
